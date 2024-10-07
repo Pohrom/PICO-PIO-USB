@@ -1,5 +1,13 @@
 
+# brew install gcc-arm-embedded
 cmake_minimum_required(VERSION 3.13)
+set(PICO_SDK_FETCH_FROM_GIT 1)
+set(PICO_BOARD waveshare_rp2040_zero)
+add_compile_definitions(PIO_USB_DP_PIN_DEFAULT=2)
+add_compile_definitions(PICO_DEFAULT_LED_PIN=PICO_DEFAULT_WS2812_PIN)
+add_compile_definitions(UART_DEV=1)
+add_compile_definitions(UART_TX_PIN=8)
+add_compile_definitions(UART_RX_PIN=9)
 include (pico_sdk_import.cmake)
 project(pio_usb)
 

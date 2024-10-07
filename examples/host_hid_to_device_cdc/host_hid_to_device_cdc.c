@@ -92,6 +92,9 @@ int main(void) {
 
   sleep_ms(10);
 
+  uart_inst_t *uart_inst = uart_get_instance(UART_DEV);
+  stdio_uart_init_full(uart_inst, 115200, UART_TX_PIN, UART_RX_PIN);
+
   multicore_reset_core1();
   // all USB task run in core1
   multicore_launch_core1(core1_main);
