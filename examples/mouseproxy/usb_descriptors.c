@@ -81,14 +81,13 @@ uint8_t const * tud_descriptor_device_cb(void)
 //--------------------------------------------------------------------+
 
 // Mouse Report Descriptor Template
-#define TUD_HID_REPORT_DESC_MOUSE_RAZER(...) \
+#define TUD_HID_REPORT_DESC_MOUSE_RAZER() \
   HID_USAGE_PAGE ( HID_USAGE_PAGE_DESKTOP      )                   ,\
   HID_USAGE      ( HID_USAGE_DESKTOP_MOUSE     )                   ,\
   HID_COLLECTION ( HID_COLLECTION_APPLICATION  )                   ,\
-    /* Report ID if any */\
-    __VA_ARGS__ \
     HID_USAGE      ( HID_USAGE_DESKTOP_POINTER )                   ,\
     HID_COLLECTION ( HID_COLLECTION_PHYSICAL   )                   ,\
+    HID_REPORT_ID(10         ) \
       HID_USAGE_PAGE  ( HID_USAGE_PAGE_BUTTON  )                   ,\
         HID_USAGE_MIN   ( 1                                      ) ,\
         HID_USAGE_MAX   ( 6                                      ) ,\
@@ -129,6 +128,15 @@ uint8_t const * tud_descriptor_device_cb(void)
         HID_REPORT_COUNT( 2                                      ) ,\
         HID_INPUT       ( HID_DATA | HID_VARIABLE | HID_RELATIVE ) ,\
     HID_COLLECTION_END                                            , \
+    HID_USAGE      ( 0x00          )                  ,\
+    HID_COLLECTION ( HID_COLLECTION_APPLICATION   )                  ,\
+      HID_REPORT_ID(4 ) \
+      HID_USAGE_PAGE  ( 0x00 ) ,\
+      HID_USAGE       ( 0x00 ) ,\
+      HID_REPORT_SIZE ( 8*10 ) ,\
+      HID_REPORT_COUNT( 1 ) ,\
+      HID_FEATURE       ( HID_CONSTANT | HID_VARIABLE | HID_ABSOLUTE ),\
+    HID_COLLECTION_END  ,\
   HID_COLLECTION_END \
 
 uint8_t const desc_hid_report[] =

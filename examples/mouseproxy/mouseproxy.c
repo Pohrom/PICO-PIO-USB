@@ -47,14 +47,15 @@
 //--------------------------------------------------------------------+
 // MACRO CONSTANT TYPEDEF PROTYPES
 //--------------------------------------------------------------------+
-
-typedef struct _inject_report_t {
+// packed
+typedef struct __attribute__ ((packed)) {
   int32_t x;
   int32_t y;
   int8_t  splits;
 } inject_report_t;
+static_assert(sizeof(inject_report_t) == 9, "inject_report_t size is not correct");
 
-typedef struct _device_report_t {
+typedef struct {
   int8_t buttons;
   int8_t x;
   int8_t y;
@@ -213,7 +214,7 @@ void hid_task(void)
 
     // tud_cdc_write_str("send mouse report\r\n");
     // tud_cdc_write_flush();
-    tud_hid_report(0, &report, sizeof(report));
+    tud_hid_report(10, &report, sizeof(report));
     return;
   }
 
@@ -358,6 +359,8 @@ void tuh_hid_mount_cb(uint8_t dev_addr, uint8_t instance, uint8_t const* desc_re
       tud_cdc_write_str("Error: cannot request report\r\n");
     }
   }
+
+  TU_LOG1("[%04x:%04x][%u] HID Interface%u, Protocol = %s\r\n", vid, pid, dev_addr, instance, protocol_str[itf_protocol]);
 }
 
 // Invoked when device with hid interface is un-mounted
